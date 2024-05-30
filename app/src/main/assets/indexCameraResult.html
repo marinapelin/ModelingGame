@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hello Camera</title>
+    <script src="https://unpkg.com/dynamsoft-camera-enhancer@2.1.0/dist/dce.js"></script>
+    <style>
+
+        .block1{
+
+            height:100%;
+            width:100%;
+
+        }
+        .block2{
+            width: 100%;
+            height:100%;
+
+        }
+        #capture{
+  border: none;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  width:100px;
+  height:100px;
+   position: fixed;
+  top:80%;
+        }
+
+    </style>
+</head>
+
+<body>
+<img src="" id="tableBanner" />
+
+    <div class="block1">
+
+        <div id="enhancerUIContainer" style="height:100vh;"></div>
+        <button id="capture"  >Capture</button>
+
+
+    </div>
+	<div class="block2">
+        <!--if vertical <img src="cont.png" style="height: 60%; padding-top: 4%; padding-left:10%; position:absolute"!-->
+        <!--if wide <img src="contour.png" style=" width: 40%; padding-top: 10%; position:absolute"> -->
+        <!--img src="lk.png" style=" width: 40%; padding-top: 10%; position:absolute"-->
+       <!--output-onlinepngtools.png-->
+    </div>
+
+    <script>
+var dataImage = localStorage.getItem('imgData');
+bannerImg = document.getElementById('tableBanner');
+bannerImg.src = "data:image/png;base64," + dataImage;
+
+
+
+    </script>
+
+</body>
+
+</html>

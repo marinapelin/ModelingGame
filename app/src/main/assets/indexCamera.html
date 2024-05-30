@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Camera</title>
+    <script src="https://unpkg.com/dynamsoft-camera-enhancer@2.1.0/dist/dce.js"></script>
+    <style>
+        .block1{
+            height:100%;
+            width:100%;
+        }
+        .block2{
+            width: 100%;
+            height:100%;
+        }
+  #capture{
+  border: none;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  width:100px;
+  height:100px;
+  position: fixed;
+  top:80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="block1">
+        <div id="enhancerUIContainer" style="height:100vh;"></div>
+        <button id="capture"  >Capture</button>
+    </div>
+    <script>
+    let enhancer = null;
+        (async () => {
+            enhancer = await Dynamsoft.DCE.CameraEnhancer.createInstance();
+            document.getElementById("enhancerUIContainer").appendChild(enhancer.getUIElement());
+            await enhancer.open(true);
+        })();
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+         navigator.mediaDevices.getUserMedia({ video: true })
+         .then(function(stream) {
+          })
+         .catch(function(error) {
+               window.postMessage('cameraPermissionDenied', '*');
+         });
+    }
+        document.getElementById('capture').onclick = () => {
+            if (enhancer) {
+                let frame = enhancer.getFrame();
+                frame.canvas.setAttribute("style","height:100vh");
+                document.getElementById("enhancerUIContainer").replaceChild(frame.canvas,document.getElementById("enhancerUIContainer").childNodes[0]);
+
+                if (confirm("Do you want to save changes?") == true) {
+                   // Get the base64-encoded image data
+                   let imageData = frame.canvas.toDataURL("image/jpeg", 1.0);
+                   AndroidInterface.saveImage(imageData);
+                }
+                location.reload();
+            }
+        };
+    </script>
+</body>
+</html>
